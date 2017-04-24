@@ -1,0 +1,50 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowBackground">@color/windowBackground</item>
+
+        <item name="alertDialogTheme">@style/Theme.AppCompat.Dialog.Alert</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
+    </style>
+
+    <!-- 没有标题栏 -->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Fullscreen">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- ActionBarDrawerToggle 图标弄成白色 -->
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
+
+    <!-- ActionBar 三个小点 -->
+    <style name="OverflowButtonStyle" parent="@android:style/Widget.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_action_more</item>
+    </style>
+
+    <!-- ActionBar theme 主题 -->
+    <style name="ActionBarTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <!-- 定义标题文字的颜色 -->
+        <item name="android:textColorPrimary">#FFFFFF</item>
+    </style>
+
+    <!-- ActionBar popupTheme 主题 -->
+    <style name="ActionBarPopupTheme" parent="ThemeOverlay.AppCompat.Light">
+        <!--<item name="android:background">@color/colorAccentDay</item>-->
+        <!-- 定义标题文字的颜色 -->
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+    </style>
+
+</resources>

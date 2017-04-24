@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_sort"
+        android:icon="@drawable/ic_action_more"
+        android:orderInCategory="100"
+        android:title="排序"
+        app:showAsAction="never">
+
+        <menu>
+            <item
+                android:id="@+id/menu_sort_by_az"
+                android:title="A 到 Z" />
+
+            <item
+                android:id="@+id/menu_sort_by_za"
+                android:title="Z 到 A" />
+
+            <item
+                android:id="@+id/menu_sort_by_date"
+                android:title="添加时间" />
+
+            <item
+                android:id="@+id/menu_sort_by_artist"
+                android:title="艺术家" />
+
+            <item
+                android:id="@+id/menu_sort_by_album"
+                android:title="专辑" />
+        </menu>
+
+    </item>
+</menu>

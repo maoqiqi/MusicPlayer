@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_sort"
+        android:icon="@drawable/ic_action_more"
+        android:orderInCategory="100"
+        android:title="排序"
+        app:showAsAction="never">
+
+        <menu>
+            <item
+                android:id="@+id/menu_sort_by_az"
+                android:title="A 到 Z" />
+
+            <item
+                android:id="@+id/menu_sort_by_za"
+                android:title="Z 到 A" />
+
+            <item
+                android:id="@+id/menu_sort_by_number_of_songs"
+                android:title="歌曲数量" />
+
+            <item
+                android:id="@+id/menu_sort_by_number_of_albums"
+                android:title="专辑数量" />
+        </menu>
+
+    </item>
+</menu>
