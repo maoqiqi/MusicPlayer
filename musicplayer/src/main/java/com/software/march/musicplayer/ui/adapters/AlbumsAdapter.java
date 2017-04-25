@@ -2,13 +2,18 @@ package com.software.march.musicplayer.ui.adapters;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.software.march.appcommonlibrary.RecyclerViewAdapter;
 import com.software.march.musicplayer.R;
 import com.software.march.musicplayer.bean.AlbumBean;
+import com.software.march.musicplayer.bean.ArtistBean;
+import com.software.march.musicplayer.ui.fragments.MoreFragment;
 
 import java.util.List;
 
@@ -34,6 +39,7 @@ public class AlbumsAdapter extends RecyclerViewAdapter<AlbumBean> {
         ImageView ivIcon = (ImageView) holder.findViewById(R.id.iv_icon);
         TextView tvAlbum = (TextView) holder.findViewById(R.id.tv_album);
         TextView tvInfo = (TextView) holder.findViewById(R.id.tv_info);
+        ImageView ivMore = (ImageView) holder.findViewById(R.id.iv_more);
 
         ivIcon.setTag(position);
         int tag = (int) ivIcon.getTag();
@@ -47,17 +53,26 @@ public class AlbumsAdapter extends RecyclerViewAdapter<AlbumBean> {
             }
         }
 
-        String album = item.getAlbum();
-        if ("<unknown>".equals(album)) {
-            album = "未知专辑";
-        }
         String artist = item.getArtist();
-        if ("<unknown>".equals(artist)) {
-            artist = "未知艺人";
-        }
+        String album = item.getAlbum();
+
+        if ("<unknown>".equals(artist)) artist = "未知艺人";
+        if ("<unknown>".equals(album)) album = "未知专辑";
+
         tvAlbum.setText(album);
         tvInfo.setText(artist + " | " + item.getNumberOfSongs() + " 首歌");
 
-        Log.i("info", item.toString());
+        ivMore.setTag(item);
+        ivMore.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                AlbumBean albumBean = (AlbumBean) v.getTag();
+                if (mContext instanceof AppCompatActivity) {
+                    FragmentManager manager = ((AppCompatActivity) mContext).getSupportFragmentManager();
+                    MoreFragment.newInstance(albumBean).show(manager, "album");
+                }
+            }
+        });
     }
 }

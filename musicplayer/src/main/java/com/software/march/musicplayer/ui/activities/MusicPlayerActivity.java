@@ -150,25 +150,10 @@ public class MusicPlayerActivity extends BaseActivity implements View.OnClickLis
             SongBean songBean = iMusicPlayerService.getCurrentSong();
             if (songBean == null) return;
 
-            String displayName = songBean.getDisplayName();
+            String artist = songBean.getArtist();
+            if ("<unknown>".equals(artist)) artist = "未知艺人";
 
-            String name;
-            String artist;
-
-            int start = displayName.indexOf(" - ");
-            if (start != -1) {
-                name = displayName.substring(start + " - ".length(), displayName.lastIndexOf("."));
-                artist = displayName.substring(0, start);
-            } else {
-                name = songBean.getTitle();
-                artist = songBean.getArtist();
-            }
-
-            if ("<unknown>".equals(artist)) {
-                artist = "未知艺人";
-            }
-
-            tvName.setText(name);
+            tvName.setText(songBean.getTitle());
             tvArtist.setText(artist);
 
             int duration = (int) songBean.getDuration();

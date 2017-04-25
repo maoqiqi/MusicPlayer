@@ -56,29 +56,13 @@ public class SongsAdapter extends RecyclerViewAdapter<SongBean> {
             tvName.setTextColor(color);
         }
 
-        String displayName = item.getDisplayName();
-
-        String name;
-        String artist;
-
-        int start = displayName.indexOf(" - ");
-        if (start != -1) {
-            name = displayName.substring(start + " - ".length(), displayName.lastIndexOf("."));
-            artist = displayName.substring(0, start);
-        } else {
-            name = item.getTitle();
-            artist = item.getArtist();
-        }
-
-        if ("<unknown>".equals(artist)) {
-            artist = "未知艺人";
-        }
+        String artist = item.getArtist();
         String album = item.getAlbum();
-        if ("<unknown>".equals(album)) {
-            album = "未知专辑";
-        }
 
-        tvName.setText(name);
+        if ("<unknown>".equals(artist)) artist = "未知艺人";
+        if ("<unknown>".equals(album)) album = "未知专辑";
+
+        tvName.setText(item.getTitle());
         tvInfo.setText(artist + "·" + album);
 
         ivMore.setTag(item);

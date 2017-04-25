@@ -1,10 +1,16 @@
 package com.software.march.musicplayer.ui.adapters;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.software.march.appcommonlibrary.RecyclerViewAdapter;
 import com.software.march.musicplayer.R;
+import com.software.march.musicplayer.bean.SongBean;
+import com.software.march.musicplayer.ui.fragments.MoreFragment;
 
 import java.io.File;
 import java.util.List;
@@ -33,8 +39,22 @@ public class FoldersAdapter extends RecyclerViewAdapter<String> {
     public void convert(ViewHolder holder, int position, String item) {
         TextView tvFolder = (TextView) holder.findViewById(R.id.tv_folder);
         TextView tvInfo = (TextView) holder.findViewById(R.id.tv_info);
+        ImageView ivMore = (ImageView) holder.findViewById(R.id.iv_more);
 
         tvFolder.setText(item.substring(item.lastIndexOf(File.separator) + 1));
         tvInfo.setText(counts[position] + "首 " + item.substring(0, item.lastIndexOf(File.separator) + 1));
+
+        ivMore.setTag(item);
+        ivMore.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String folderPath = (String) v.getTag();
+                if (mContext instanceof AppCompatActivity) {
+                    FragmentManager manager = ((AppCompatActivity) mContext).getSupportFragmentManager();
+                    MoreFragment.newInstance(folderPath).show(manager, "folder");
+                }
+            }
+        });
     }
 }

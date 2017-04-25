@@ -1,16 +1,9 @@
 package com.software.march.musicplayer.ui.fragments;
 
-import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.software.march.appcommonlibrary.BaseDialogFragment;
+import com.software.march.appcommonlibrary.ScreenUtils;
 import com.software.march.musicplayer.R;
 import com.software.march.musicplayer.bean.AlbumBean;
 import com.software.march.musicplayer.bean.ArtistBean;
@@ -91,27 +84,42 @@ public class MoreFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
+        Bundle bundle = getArguments();
+        type = bundle.getInt("type", -1);
+        if (type == -1) {
+            return;
+        } else if (type == OVERFLOW_SONG) {
+            songBean = bundle.getParcelable("songBean");
+        } else if (type == OVERFLOW_ARTIST) {
+
+        } else if (type == OVERFLOW_ALBUM) {
+
+        } else if (type == OVERFLOW_FOLDER) {
+
+        }
         Window window = getDialog().getWindow();
         window.setBackgroundDrawableResource(android.R.color.transparent);
         WindowManager.LayoutParams params = window.getAttributes();
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
 
-        DisplayMetrics dm = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        if (type == OVERFLOW_SONG)
+            params.height = ScreenUtils.getScreenHeight(getActivity()) / 2;
+        else
+            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
-        params.height = dm.heightPixels / 2;
         params.gravity = Gravity.BOTTOM;
         getDialog().getWindow().setAttributes(params);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getDialog().getWindow().setWindowAnimations(R.style.AnimationDialogStyle);
         mRootView = inflater.inflate(R.layout.fragment_more, container, false);
-        afterCreate(savedInstanceState);
+        afterCreate();
         return mRootView;
     }
 
-    protected void afterCreate(Bundle savedInstanceState) {
+    protected void afterCreate() {
         Bundle bundle = getArguments();
         type = bundle.getInt("type", -1);
         if (type == -1) {
@@ -150,11 +158,17 @@ public class MoreFragment extends DialogFragment {
 
         moreItemBeans = new ArrayList<>();
         if (type == OVERFLOW_SONG) {
+            String artist = songBean.getArtist();
+            String album = songBean.getAlbum();
+
+            if ("<unknown>".equals(artist)) artist = "未知艺人";
+            if ("<unknown>".equals(album)) album = "未知专辑";
+
             moreItemBeans.add(new MoreItemBean("下一首播放", R.drawable.ic_more_next));
             moreItemBeans.add(new MoreItemBean("收藏到歌单", R.drawable.ic_more_fav));
             moreItemBeans.add(new MoreItemBean("分享", R.drawable.ic_more_share));
-            moreItemBeans.add(new MoreItemBean("歌手：" + songBean.getArtist(), R.drawable.ic_more_artist));
-            moreItemBeans.add(new MoreItemBean("专辑：" + songBean.getAlbum(), R.drawable.ic_more_album));
+            moreItemBeans.add(new MoreItemBean("歌手：" + artist, R.drawable.ic_more_artist));
+            moreItemBeans.add(new MoreItemBean("专辑：" + album, R.drawable.ic_more_album));
             moreItemBeans.add(new MoreItemBean("设为铃声", R.drawable.ic_more_ring));
             moreItemBeans.add(new MoreItemBean("查看歌曲信息", R.drawable.ic_more_document));
             moreItemBeans.add(new MoreItemBean("删除", R.drawable.ic_more_delete));
