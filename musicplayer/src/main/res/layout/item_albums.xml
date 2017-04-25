@@ -28,6 +28,7 @@
             android:id="@+id/tv_album"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLines="1"
             android:text="2009年12月新歌速递"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="14sp" />

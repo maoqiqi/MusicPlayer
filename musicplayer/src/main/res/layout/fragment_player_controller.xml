@@ -55,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/currently_playing_song"
-                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:text="歌曲名称"
                     android:textColor="#111111"
                     android:textSize="14sp" />

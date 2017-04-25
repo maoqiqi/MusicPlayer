@@ -20,6 +20,7 @@ import com.software.march.musicplayer.bean.MoreItemBean;
 import com.software.march.musicplayer.bean.SongBean;
 import com.software.march.musicplayer.ui.adapters.MoreAdapter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,9 @@ public class MoreFragment extends DialogFragment {
 
     private int type;
     private SongBean songBean;
+    private ArtistBean artistBean;
+    private AlbumBean albumBean;
+    private String folderPath;
 
     private View mRootView;
     private TextView tvTitle;
@@ -66,7 +70,7 @@ public class MoreFragment extends DialogFragment {
     public static MoreFragment newInstance(AlbumBean albumBean) {
         MoreFragment fragment = new MoreFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("type", OVERFLOW_FOLDER);
+        bundle.putInt("type", OVERFLOW_ALBUM);
         bundle.putSerializable("albumBean", albumBean);
         fragment.setArguments(bundle);
         return fragment;
@@ -75,7 +79,7 @@ public class MoreFragment extends DialogFragment {
     public static MoreFragment newInstance(String folderPath) {
         MoreFragment fragment = new MoreFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("type", OVERFLOW_ALBUM);
+        bundle.putInt("type", OVERFLOW_FOLDER);
         bundle.putSerializable("folderPath", folderPath);
         fragment.setArguments(bundle);
         return fragment;
@@ -84,19 +88,6 @@ public class MoreFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        Bundle bundle = getArguments();
-        type = bundle.getInt("type", -1);
-        if (type == -1) {
-            return;
-        } else if (type == OVERFLOW_SONG) {
-            songBean = bundle.getParcelable("songBean");
-        } else if (type == OVERFLOW_ARTIST) {
-
-        } else if (type == OVERFLOW_ALBUM) {
-
-        } else if (type == OVERFLOW_FOLDER) {
-
-        }
         Window window = getDialog().getWindow();
         window.setBackgroundDrawableResource(android.R.color.transparent);
         WindowManager.LayoutParams params = window.getAttributes();
@@ -127,11 +118,11 @@ public class MoreFragment extends DialogFragment {
         } else if (type == OVERFLOW_SONG) {
             songBean = bundle.getParcelable("songBean");
         } else if (type == OVERFLOW_ARTIST) {
-
+            artistBean = (ArtistBean) bundle.getSerializable("artistBean");
         } else if (type == OVERFLOW_ALBUM) {
-
+            albumBean = (AlbumBean) bundle.getSerializable("albumBean");
         } else if (type == OVERFLOW_FOLDER) {
-
+            folderPath = bundle.getString("folderPath");
         }
 
         tvTitle = (TextView) mRootView.findViewById(R.id.tv_title);
@@ -149,11 +140,16 @@ public class MoreFragment extends DialogFragment {
         if (type == OVERFLOW_SONG) {
             tvTitle.setText("歌曲：" + " " + songBean.getTitle());
         } else if (type == OVERFLOW_ARTIST) {
-            tvTitle.setText("歌手：" + " ");
+            String artist = artistBean.getArtist();
+            if ("<unknown>".equals(artist)) artist = "未知艺人";
+            tvTitle.setText("歌手：" + " " + artist);
         } else if (type == OVERFLOW_ALBUM) {
-            tvTitle.setText("专辑：" + " ");
+            String album = albumBean.getAlbum();
+            if ("<unknown>".equals(album)) album = "未知专辑";
+            tvTitle.setText("专辑：" + " " + album);
         } else if (type == OVERFLOW_FOLDER) {
-            tvTitle.setText("文件夹：" + " ");
+            String folderName = folderPath.substring(folderPath.lastIndexOf(File.separator) + 1);
+            tvTitle.setText("文件夹：" + " " + folderName);
         }
 
         moreItemBeans = new ArrayList<>();

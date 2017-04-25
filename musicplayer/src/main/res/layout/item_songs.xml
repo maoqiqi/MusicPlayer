@@ -27,6 +27,8 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="歌曲名称"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="#212121"
