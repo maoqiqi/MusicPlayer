@@ -50,15 +50,20 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
+                <com.software.march.musicplayer.ui.view.MarqueTextView
                     android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/currently_playing_song"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:text="歌曲名称"
                     android:textColor="#111111"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_artist"
